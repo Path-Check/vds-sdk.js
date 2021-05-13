@@ -13,5 +13,8 @@ module.exports = {
   target: 'web',
   optimization: {
     minimize: false
+  },
+  node: {
+    net: 'empty',
   }
 };
