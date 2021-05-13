@@ -1,0 +1,20 @@
+{
+  "name": "icaovds-sdk",
+  "version": "0.0.1",
+  "description": "Verifiable QR SDK for ICAO Visible Digital Seals",
+  "main": "lib/index.js",
+  "scripts": {
+    "test": "jest",
+    "webpack": "webpack --config webpack.config.js"
+  },
+  "author": "Vitor Pamplona",
+  "license": "MIT",
+  "dependencies": {
+    "@fidm/x509": "^1.2.1"
+  },
+  "devDependencies": {
+    "jest": "^26.6.3",
+    "webpack": "^4.44.1",
+    "webpack-cli": "^4.6.0"
+  }
+}
