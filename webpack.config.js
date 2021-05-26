@@ -12,7 +12,7 @@ module.exports = {
   },
   target: 'web',
   optimization: {
-    minimize: false
+    minimize: true
   },
   node: {
     net: 'empty',
