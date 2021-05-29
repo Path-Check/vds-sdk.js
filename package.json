@@ -1,5 +1,5 @@
 {
-  "name": "icaovds-sdk",
+  "name": "@pathcheck/icaovds-sdk",
   "version": "0.0.3",
   "description": "Verifiable QR SDK for ICAO Visible Digital Seals",
   "main": "lib/index.js",
