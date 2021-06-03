@@ -1,19 +1,33 @@
 {
-  "name": "@pathcheck/icaovds-sdk",
+  "name": "@pathcheck/vds-sdk",
   "version": "0.0.3",
   "description": "Verifiable QR SDK for ICAO Visible Digital Seals",
-  "main": "lib/index.js",
   "scripts": {
-    "test": "jest",
+    "test": "mocha",
     "webpack": "webpack --config webpack.config.js"
   },
   "author": "Vitor Pamplona",
   "license": "GPL-3.0-only",
+  "files": [
+    "lib/**/*.js",
+    "scripts/**/*.js"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Path-Check/vds-sdk.js"
+  },
+  "bugs": {
+    "url": "https://github.com/Path-Check/vds-sdk.js/issues"
+  },
+  "main": "lib/index.js",
+  "module": "lib/main.js",
   "dependencies": {
-    "@fidm/x509": "^1.2.1"
+    "@fidm/x509": "^1.2.1",
+    "esm": "^3.2.25"
   },
   "devDependencies": {
-    "jest": "^26.6.3",
+    "chai": "^4.3.4",
+    "mocha": "^8.4.0",
     "webpack": "^4.44.1",
     "webpack-cli": "^4.6.0"
   }

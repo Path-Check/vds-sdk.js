@@ -5,7 +5,7 @@ JavaScript Implementation of [ICAO Visible Digital Seals](https://www.icao.int/S
 # Install
 
 ```sh
-npm install icaovds.sdk --save
+npm install @pathcheck/vds-sdk --save
 ```
 
 # Setting up CSCA, DCS and Key IDs

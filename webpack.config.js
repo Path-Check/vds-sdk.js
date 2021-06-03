@@ -2,12 +2,12 @@ const path = require('path');
 
 module.exports = {
   mode: "production",
-  entry: "./lib/index.js",
+  entry: "./lib/main.js",
   devtool: "source-map",
   output: {
-    filename: 'icaovds.sdk.min.js',
+    filename: 'vds-sdk.min.js',
     path: path.resolve(__dirname, 'dist'),
-    library: 'ICAOVDS',
+    library: 'VDS',
     libraryTarget: 'umd',
   },
   target: 'web',
