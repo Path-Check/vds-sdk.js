@@ -21,6 +21,7 @@
   },
   "main": "lib/index.js",
   "module": "lib/main.js",
+  "react-native": "lib/main.js",
   "dependencies": {
     "@fidm/x509": "^1.2.1",
     "esm": "^3.2.25"
