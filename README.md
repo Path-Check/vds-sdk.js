@@ -106,16 +106,16 @@ const TEST_PAYLOAD = {
 };
 ```
 
-Call the signAndPack to create the URI for the QR Code: 
+Call the signAndPack to create the JSON String for the QR Code: 
 
 ```js
-const qrUri = await signAndPack(TEST_PAYLOAD, PUBLIC_KEY_PEM, PRIVATE_KEY_P8);
+const qrValue = await signAndPack(TEST_PAYLOAD, PUBLIC_KEY_PEM, PRIVATE_KEY_P8);
 ```
 
-And call the unpack and verify to convert the URI into the payload: 
+And call the unpack and verify to convert the QR Code information into the payload: 
 
 ```js
-const payload = await unpackAndVerify(qrUri);
+const payload = await unpackAndVerify(qrValue);
 ```
 
 # Development
