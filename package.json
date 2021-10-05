@@ -23,8 +23,9 @@
   "module": "lib/main.js",
   "react-native": "lib/main.js",
   "dependencies": {
-    "@fidm/x509": "^1.2.1",
+    "@fidm/asn1": "^1.0.4",
     "esm": "^3.2.25",
+    "isomorphic-webcrypto": "^2.3.8",
     "json-canonicalize": "^1.0.4"
   },
   "devDependencies": {
