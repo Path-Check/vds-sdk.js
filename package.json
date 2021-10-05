@@ -24,7 +24,8 @@
   "react-native": "lib/main.js",
   "dependencies": {
     "@fidm/x509": "^1.2.1",
-    "esm": "^3.2.25"
+    "esm": "^3.2.25",
+    "json-canonicalize": "^1.0.4"
   },
   "devDependencies": {
     "chai": "^4.3.4",
