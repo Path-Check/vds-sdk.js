@@ -26,7 +26,8 @@
     "@fidm/asn1": "^1.0.4",
     "esm": "^3.2.25",
     "isomorphic-webcrypto": "^2.3.8",
-    "json-canonicalize": "^1.0.4"
+    "json-canonicalize": "^1.0.4",
+    "sha256-uint8array": "^0.10.3"
   },
   "devDependencies": {
     "chai": "^4.3.4",
