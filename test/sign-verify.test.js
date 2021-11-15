@@ -101,8 +101,8 @@ describe("ICAOs VDS", function () {
       },
     };
     const result = await verify(signed);
-    delete result['sig'];
-    expect(result).to.eql(TEST_PAYLOAD);
+    delete result['credential']['sig'];
+    expect(result.credential).to.eql(TEST_PAYLOAD);
   });
 
   it("should Pack And Unpack", async () => {
@@ -119,8 +119,8 @@ describe("ICAOs VDS", function () {
       PRIVATE_KEY_P8
     );
     const resultJSON = await unpackAndVerify(signed);
-    delete resultJSON["sig"];
-    expect(resultJSON).to.eql(TEST_PAYLOAD);
+    delete resultJSON["credential"]["sig"];
+    expect(resultJSON.credential).to.eql(TEST_PAYLOAD);
   });
 });
 
@@ -164,11 +164,24 @@ describe("Prod ICAOs VDS", function () {
       },
     };
 
+    const AUS_ISSUER = {
+      displayName: { en: 'Gov of Australia' },
+      entityType: 'issuer',
+      status: 'current',
+      validFromDT: '2021-08-31T14:00:00.000Z',
+      validUntilDT: '2031-09-30T13:59:59.000Z',
+      didDocument: '-----BEGIN CERTIFICATE-----\n' +
+        'MIIDhDCCAWygAwIBAgICGK0wDQYJKoZIhvcNAQELBQAwZTELMAkGA1UEBhMCQVUxDDAKBgNVBAoMA0dPVjENMAsGA1UECwwEREZBVDEMMAoGA1UECwwDQVBPMSswKQYDVQQDDCJQYXNzcG9ydCBDb3VudHJ5IFNpZ25pbmcgQXV0aG9yaXR5MB4XDTIxMDgzMTE0MDAwMFoXDTMxMDkzMDEzNTk1OVowHDELMAkGA1UEBhMCQVUxDTALBgNVBAMTBERGQVQwWTATBgcqhkjOPQIBBggqhkjOPQMBBwNCAARSVpOyHuLjm01TB1iLBr3SrUp2GkQlM-mPqubbW3mjs0DTeRKrfVTSkkZNgOGj_DB_fo3p8qGy8UVgT4DQRVhIo1IwUDAWBgdngQgBAQYCBAswCQIBADEEEwJOVjAVBgNVHSUBAf8ECzAJBgdngQgBAQ4CMB8GA1UdIwQYMBaAFDYXwef1Z5VxLjd1cI5VgzGG6TgOMA0GCSqGSIb3DQEBCwUAA4ICAQCh_Qc5i6-vewGqinR9EdUpsl0P4jqg0pdx7hyOtPgYOwbTOegJyZOjyWZyuLlxGYuvCHqbrnATMedoIoUJzt8GxHA-4v5TUN2yEbRFXev8ur_0Y3uF4WXFr93Zl0LV78PBNZwXKfZEC6oTN_eVgtR37GdnYsWno0SuhR4fJo8JC_blivas8BJt78Hg8VhvWSK3uT0T58eYQjQhbsXV-BxJ2kSspdvkUF6-arLHh6DVS3ATPAGIm6fEvF4AxnLq5OSHOC3zZR0SR9XntYxEwjo_bW8O0Se8qa5mIBpXmvlwh0Ij6sqVwEskvkM30GmQGfZh5VjFujN2AZnwpjOjK0R-JvR3u6jsBJqVMgm75HgezOzayNiaqzhitrgg5KpO3gK_j3C-Doj5iPAm7I_63GyjUi8ZnqVUZ37UxM19uX2SvhTTQ70nL-zHNfHOyBXJgzMi4Zkor2uagHPz-W1XvNVwGEfFAu-nEyIOKBndHwnvSomL54yBv83X2yAQsoYggU18LNXMHUonTJ_ug7FU0LEX3qA1TeARJ4WBFNjysrBXQepVLowcbtvrhLFjocHjmCp3z17xUoKGI6daajCbvedXgeeSWSD5CuMAXpdN3Yml7VdW7PCK4DD0E_raw6d_wKNGSYAh0TBpNLxnunquai-gFIjgf4iRoys5F35KwmvpZw==\n' +
+        '-----END CERTIFICATE-----',
+      credentialType: [ 'icao.vacc', 'icao.test' ]
+    };
+
     const signed =
       '{"data":{"hdr":{"is":"AUS","t":"icao.vacc","v":1},"msg":{"pid":{"dob":"1961-05-15","i":"PA0941262","n":"CITIZEN  JANE SUE","sex":"F"},"uvci":"VB0009990012","ve":[{"des":"XM68M6","dis":"RA01.0","nam":"AstraZeneca Vaxzevria","vd":[{"adm":"General Practitioner","ctr":"AUS","dvc":"2021-09-15","lot":"300157P","seq":1}]}]}},"sig":{"alg":"ES256","cer":"MIIDhDCCAWygAwIBAgICGK0wDQYJKoZIhvcNAQELBQAwZTELMAkGA1UEBhMCQVUxDDAKBgNVBAoMA0dPVjENMAsGA1UECwwEREZBVDEMMAoGA1UECwwDQVBPMSswKQYDVQQDDCJQYXNzcG9ydCBDb3VudHJ5IFNpZ25pbmcgQXV0aG9yaXR5MB4XDTIxMDgzMTE0MDAwMFoXDTMxMDkzMDEzNTk1OVowHDELMAkGA1UEBhMCQVUxDTALBgNVBAMTBERGQVQwWTATBgcqhkjOPQIBBggqhkjOPQMBBwNCAARSVpOyHuLjm01TB1iLBr3SrUp2GkQlM-mPqubbW3mjs0DTeRKrfVTSkkZNgOGj_DB_fo3p8qGy8UVgT4DQRVhIo1IwUDAWBgdngQgBAQYCBAswCQIBADEEEwJOVjAVBgNVHSUBAf8ECzAJBgdngQgBAQ4CMB8GA1UdIwQYMBaAFDYXwef1Z5VxLjd1cI5VgzGG6TgOMA0GCSqGSIb3DQEBCwUAA4ICAQCh_Qc5i6-vewGqinR9EdUpsl0P4jqg0pdx7hyOtPgYOwbTOegJyZOjyWZyuLlxGYuvCHqbrnATMedoIoUJzt8GxHA-4v5TUN2yEbRFXev8ur_0Y3uF4WXFr93Zl0LV78PBNZwXKfZEC6oTN_eVgtR37GdnYsWno0SuhR4fJo8JC_blivas8BJt78Hg8VhvWSK3uT0T58eYQjQhbsXV-BxJ2kSspdvkUF6-arLHh6DVS3ATPAGIm6fEvF4AxnLq5OSHOC3zZR0SR9XntYxEwjo_bW8O0Se8qa5mIBpXmvlwh0Ij6sqVwEskvkM30GmQGfZh5VjFujN2AZnwpjOjK0R-JvR3u6jsBJqVMgm75HgezOzayNiaqzhitrgg5KpO3gK_j3C-Doj5iPAm7I_63GyjUi8ZnqVUZ37UxM19uX2SvhTTQ70nL-zHNfHOyBXJgzMi4Zkor2uagHPz-W1XvNVwGEfFAu-nEyIOKBndHwnvSomL54yBv83X2yAQsoYggU18LNXMHUonTJ_ug7FU0LEX3qA1TeARJ4WBFNjysrBXQepVLowcbtvrhLFjocHjmCp3z17xUoKGI6daajCbvedXgeeSWSD5CuMAXpdN3Yml7VdW7PCK4DD0E_raw6d_wKNGSYAh0TBpNLxnunquai-gFIjgf4iRoys5F35KwmvpZw==","sigvl":"G4-yhmStxY1MML0fLf7LG6OmJXtP6uo5v_fonZ-wiP1N0oSTp9BD8ZqqwHB6uEFukSrsgqBThmOr7aD0_jHY3g=="}}';
 
     const result = await verify(JSON.parse(signed));
-    expect(result).to.eql(EXPECTED);
+    expect(result.credential).to.eql(EXPECTED);
+    expect(result.issuer).to.eql(AUS_ISSUER);
   });
 
   it("should Verify the json from Spec Examples", async () => {
@@ -176,9 +189,21 @@ describe("Prod ICAOs VDS", function () {
     const signed =
       '{"data":{"hdr":{"t":"icao.vacc","v":1,"is":"UTO"},"msg":{"uvci":"U32870","pid":{"n":"Smith Bill","dob":"1990-01-02","sex":"M","i":"A1234567Z","ai":"L4567890Z"},"ve":[{"des":"XM68M6","nam":"Comirnaty","dis":"RA01.0","vd":[{"dvc":"2021-03-03","seq":1,"ctr":"UTO","adm":"RIVM","lot":"VC35679","dvn":"2021-03-24"},{"dvc":"2021-03-24","seq":2,"ctr":"UTO","adm":"RIVM","lot":"VC87540"}]}]}},"sig":{"alg":"ES256","cer":"MIIBeTCCAR2gAwIBAgIBaDAMBggqhkjOPQQDAgUAMB0xCzAJBgNVBAYTAlVUMQ4wDAYDVQQDDAVVVCBDQTAeFw0yMTA0MDcwNDMwMjZaFw0yNjEwMDcwNDMwMjZaMBoxCzAJBgNVBAYTAlVUMQswCQYDVQQDEwIwNjBZMBMGByqGSM49AgEGCCqGSM49AwEHA0IABI5bRQ3-vabXhHAs2IPi-k9rP_TS2J8aq5fTtUG1iOwXdBxx2n6c38TJ2MzBWT5PHCKVlq5JOCyJ1nDlCPd1S2yjTzBNMBIGA1UdJQQLMAkGB2eBCAEBDgIwHwYDVR0jBBgwFoAUymyksnX8rywn0RH7nDq-Bs2QOqowFgYHZ4EIAQEGAgQLMAkCAQAxBBMCTlYwDAYIKoZIzj0EAwIFAANIADBFAiBVaaJVHvWLX756yAGt04C89ZEWGr-BsHDgaRb0EH3d9gIhAO2UNvLNhEoUWT1I_zj_cG5mh2U-lWCMBUQ3zSQqWUcs","sigvl":"cxfyi2vq2XJfZF7ksEkIZJtKbGrRE570UZc_rNAlpfRHD_Xjq57r2h-QLvd_tCQGitsZevFmB0iXzEFdeeZ4zA=="}}';
 
+    const UNTRUSTED_ISSUER = {
+      displayName: { en: 'Untrusted Issuer: UTO' },
+      entityType: 'issuer',
+      status: 'untrusted',
+      validFromDT: "2021-01-01T01:00:00.000Z",
+      didDocument: '-----BEGIN CERTIFICATE-----\n' +
+        'MIIBeTCCAR2gAwIBAgIBaDAMBggqhkjOPQQDAgUAMB0xCzAJBgNVBAYTAlVUMQ4wDAYDVQQDDAVVVCBDQTAeFw0yMTA0MDcwNDMwMjZaFw0yNjEwMDcwNDMwMjZaMBoxCzAJBgNVBAYTAlVUMQswCQYDVQQDEwIwNjBZMBMGByqGSM49AgEGCCqGSM49AwEHA0IABI5bRQ3+vabXhHAs2IPi+k9rP/TS2J8aq5fTtUG1iOwXdBxx2n6c38TJ2MzBWT5PHCKVlq5JOCyJ1nDlCPd1S2yjTzBNMBIGA1UdJQQLMAkGB2eBCAEBDgIwHwYDVR0jBBgwFoAUymyksnX8rywn0RH7nDq+Bs2QOqowFgYHZ4EIAQEGAgQLMAkCAQAxBBMCTlYwDAYIKoZIzj0EAwIFAANIADBFAiBVaaJVHvWLX756yAGt04C89ZEWGr+BsHDgaRb0EH3d9gIhAO2UNvLNhEoUWT1I/zj/cG5mh2U+lWCMBUQ3zSQqWUcs\n' +
+        '-----END CERTIFICATE-----',
+      credentialType: [ 'icao.vacc', 'icao.test' ]
+    };
+
     const result = await verify(JSON.parse(signed));
-    delete result['sig'];
-    expect(result).to.eql(TEST_PAYLOAD);
+    delete result.credential['sig'];
+    expect(result.credential).to.eql(TEST_PAYLOAD);
+    expect(result.issuer).to.eql(UNTRUSTED_ISSUER);
   });
 
   it("should hash the public cert correctly", async () => {
